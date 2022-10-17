@@ -40,22 +40,45 @@ def fight(player1,player2)
     print_looser(player1,player2)
 end
 
-def attacks(donneur,receveur)
+def attacks(giver,receiver)
+    print "\n  #{giver.name} "
+    random_type_attack
+    random_adjectif
+    print "#{receiver.name}\n"   
+  
+    x = rand(1..6)
+    receiver.gets_damage(x)
+    puts "  et lui inflige #{x} point(s) de dommages !!"
+end
+
+def random_type_attack
     x = rand(0..4)
     if x == 0
-        puts "#{donneur.name} attaque #{receveur.name} avec lacheté et férocité ..."
+        print "attaque avec lacheté et férocité "
     elsif x == 1
-        puts "#{donneur.name} gifle #{receveur.name} par surprise et mépris ..."
+        print "gifle par surprise et mépris "
     elsif x == 2
-        puts "#{donneur.name} assène un coup à #{receveur.name} entre les jambes ..."
+        print "assène un coup entre les jambes à "
     elsif x == 3
-        puts "#{donneur.name} fait sentir son haleine du réveil à #{receveur.name} ..."
+        print "fait sentir son haleine du réveil à "
     elsif x == 4
-        puts "#{donneur.name} lance un regard menaçant à #{receveur.name} qui en est pétrie par la peur ..."
+        print "lance un regard pétrifiant à "
     end
-    x = rand(0..6)
-    receveur.gets_damage(x)
-    puts "et lui inflige #{x} points de dommages !!"
+end
+
+def random_adjectif
+    x = rand(0..4)
+    if x == 0
+        print "le pauvre "
+    elsif x == 1
+        print "l'intrépide "
+    elsif x == 2
+        print "ce malotru de "
+    elsif x == 3
+        print "ce nul de "
+    elsif x == 4
+        print "l'autre délinquant de "
+    end
 end
 
 def print_looser(player1,player2)
@@ -64,7 +87,7 @@ def print_looser(player1,player2)
     else
     looser = player2
     end
-    print "\n#{looser.name} is Dead ...\n\n"
+    print "\n  .... #{looser.name} is Dead ...\n\n"
 end
 
 init_game
