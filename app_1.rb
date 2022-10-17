@@ -4,38 +4,37 @@ Bundler.require
 require_relative 'lib/game'
 require_relative 'lib/player'
 
-player1 = Player.new("Dylanou")
-player2 = Player.new("Gillianou")
+player1 = Player.new("DYLANOU")
+player2 = Player.new("GILLIANOU")
 
 # binding.pry
 def init_game
-    print "\n  ---------------------------------------\n"
-    print "  |     WELCOME TO A SANGUINARY GAME    |\n"
-    print "  ---------------------------------------\n\n"
-    sleep 2
+    print "\n\e[41m        \e[1mWELCOME TO A SANGUINARY GAME\e[22m        \e[0m\n"
+    sleep 1.5
 end
 
 def players_statut(player1, player2)
-    print "\n  ---------------------------------------\n"
-    print "  |        ETAT DES COMBATTANTS         |\n"
-    print "  ---------------------------------------\n"
+    print "\n\e[42m             \e[1mETAT DES COMBATTANTS\e[22m           \e[0m\n"
     display_statut(player1)
     display_statut(player2)
-    print "\n\n"
+    print "\e[42m                                            \e[0m\n"
     sleep 4
 end
 
 def display_statut(player)
-    print "  |  #{player.name}"
+    print "\e[42m \e[0m"
+    print "\e[36m     \e[1m#{player.name}\e[22m\e[0m"
     x = player.name.length
     x = 13-x 
     print " "*x
-    print "|  Life Points : #{player.life_points}"
+    print "    Life Points >  \e[32m\e[1m#{player.life_points}\e[22m\e[0m"
     str = player.life_points.to_s
     x = str.length
     x = 5-x
     print " "*x
-    print "|\n  ---------------------------------------\n"
+    print "\e[42m \e[0m\n"
+
+
 end
 
 def fight(player1,player2)
@@ -53,22 +52,22 @@ def fight(player1,player2)
 end
 
 def punch
-    print "  @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n"
-    print "  @@@     EN AVANT LA FILOCHE !!!     @@@\n"
-    print "  @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n"
-    sleep 2
+    print "\n\e[41m           \e[1mEN AVANT LA FILOCHE !!!\e[22m          \e[0m\n"
+    sleep 1.5
 end
 
 def attacks(giver,receiver)
-    print "\n  #{giver.name} "
+    print "\e[36m\n  #{giver.name} \e[0m"
     random_type_attack
     random_adjectif
-    print "#{receiver.name}\n"   
+    print "\e[36m#{receiver.name}\n\e[0m"   
   
     x = rand(1..6)
     receiver.gets_damage(x)
-    puts "  et lui inflige #{x} point(s) de dommages !!"
-    sleep 5
+    print "  et lui inflige "
+    print "\e[32m#{x}\e[0m"
+    print " point(s) de dommages !!\n"
+    sleep 4
 end
 
 def random_type_attack
@@ -89,7 +88,7 @@ def print_looser(player1,player2)
     else
     looser = player2
     end
-    print "\n  .... #{looser.name} is Dead ...\n\n"
+    print "\n\e[35m         .... \e[1m#{looser.name} is Dead\e[22m ....\e[0m\n\n"
 end
 
 init_game

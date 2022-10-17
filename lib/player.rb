@@ -12,3 +12,7 @@ class Player
         @life_points -= damage
     end
 end
+
+class HumanPlayer < Player
+
+end
