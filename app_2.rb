@@ -18,11 +18,13 @@ def init_game
 end
 
 def players_statut(player, opponent1, opponent2)
-    print "\n\e[42m             \e[1mETAT DES COMBATTANTS\e[22m           \e[0m\n"
+    print "\n\e[42m                                            \e[1mETAT DES COMBATTANTS\e[22m                                          \e[0m\n"
     player.showstate
     opponent1.showstate
     opponent2.showstate
-    print "\e[42m \e[0m"*44
+    print "\e[42m \e[0m"
+    print "\e[32m▄\e[0m"*104
+    print "\e[42m \e[0m"
     sleep 0.5
 end
 
@@ -116,11 +118,8 @@ end
 
 def punch
     print "\n\n\e[41m           \e[1mEN AVANT LA FILOCHE !!!\e[22m          \e[0m"
-    for i in 0..2
-        sleep 0.2
-        print "\e[1m  GO ! \e[22m"
-    end
     puts
+    sleep 0.2
 end
 
 def attacks(giver,receiver)
@@ -136,6 +135,7 @@ end
 
 def cant_attack(opponent)
     print "\n YOU CAN'T ATTACK \e[36m#{opponent.name}\e[0m ! \e[31mHE'S DEAD\e[0m !!!\n\n"
+    sleep 0.5
 end
 
 def random_type_attack

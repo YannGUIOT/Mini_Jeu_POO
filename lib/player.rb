@@ -45,22 +45,37 @@ class HumanPlayer < Player
         x = @name.length
         x = 16-x 
         print " "*x
+        case @weapon_level
+            when 1 then print "   WEAPON > \e[31m\e[1m#{@weapon_level}\e[22m\e[0m "
+            when 2..4 then print "   WEAPON > \e[32m\e[1m#{@weapon_level}\e[22m\e[0m "
+            when 5..6 then print "   WEAPON > \e[33m\e[1m#{@weapon_level}\e[22m\e[0m "
+        end
 
-        if @life_points > 0
-            print "   LP >  \e[32m\e[1m#{@life_points}\e[22m\e[0m"
-        else
-            print "   LP >  \e[31m\e[1m#{@life_points}\e[22m\e[0m"
+        case @weapon_level
+            when 1 then print "\e[31m▄\e[0m"
+            when 2..4 then print "\e[32m▄\e[0m"*@weapon_level
+            when 5..6 then print "\e[33m▄\e[0m"*@weapon_level
+        end
+        print "\e[30m▄\e[0m"*(6-@weapon_level)
+
+        case @life_points
+            when 0..24 then print "   LIFE > \e[31m\e[1m#{@life_points}\e[22m\e[0m"
+            when 25..74 then print "   LIFE > \e[32m\e[1m#{@life_points}\e[22m\e[0m"
+            when 75..100 then print "   LIFE > \e[33m\e[1m#{@life_points}\e[22m\e[0m"
         end
         str = @life_points.to_s
         x = str.length
-        x = 5-x
+        x = 4-x
         print " "*x
-        if @weapon_level > 1
-            print " WL >  \e[33m\e[1m#{@weapon_level}\e[22m\e[0m  "
-        else
-            print " WL >  \e[32m\e[1m#{@weapon_level}\e[22m\e[0m  "
+        
+        bar = (@life_points/2).to_i
+        case @life_points
+            when 0..24 then print "\e[31m▄\e[0m"*bar
+            when 25..74 then print "\e[32m▄\e[0m"*bar
+            when 75..100 then print "\e[33m▄\e[0m"*bar
         end
-        print "\e[42m \e[0m\n"
+        print "\e[30m▄\e[0m"*(50-bar)
+        print "  \e[42m \e[0m\n"
     end
 
     def gets_damage(damage)
