@@ -52,30 +52,24 @@ def fight(player,opponent1,opponent2)
                     punch # EN AVANT LA FILOCHE
                 end
             end
-            if choice == 1
-                player.search_weapon
-            elsif choice == 2
-                player.search_health_pack
-            elsif choice == 3
-                attacks(player,opponent1) if opponent1_is_in_life == true
-                cant_attack(opponent1) if opponent1_is_in_life == false
-            elsif choice == 4
-                attacks(player,opponent2) if opponent2_is_in_life == true
-                cant_attack(opponent2) if opponent2_is_in_life == false
-            else
-                player.life_points = 0
-                game = false
-                break
+            case choice
+                when 1 then player.search_weapon
+                when 2 then player.search_health_pack              
+                when 3
+                    attacks(player,opponent1) if opponent1_is_in_life == true
+                    cant_attack(opponent1) if opponent1_is_in_life == false
+                when 4
+                    attacks(player,opponent2) if opponent2_is_in_life == true
+                    cant_attack(opponent2) if opponent2_is_in_life == false
+                else
+                    player.life_points = 0
+                    game = false
+                    break
             end
 
             # OPPONENTS LIFE VERIFICATION
-            if opponent1.life_points == 0
-                opponent1_is_in_life = false
-            end
-            if opponent2.life_points == 0
-                opponent2_is_in_life = false
-            end
-
+            opponent1_is_in_life = false if opponent1.life_points == 0
+            opponent2_is_in_life = false if opponent2.life_points == 0
 
             # GAME PARTY VERIFICATION
             game = verify_party(player,opponent1,opponent2)
@@ -85,9 +79,7 @@ def fight(player,opponent1,opponent2)
             end
 
             # OPPONENT 1 ATTACK
-            if game == true && opponent1.life_points > 0
-                attacks(opponent1,player)
-            end
+            attacks(opponent1,player) if game == true && opponent1.life_points > 0
 
             # GAME PARTY VERIFICATION
             game = verify_party(player,opponent1,opponent2)
@@ -97,15 +89,27 @@ def fight(player,opponent1,opponent2)
             end
 
             # OPPONENT 2 ATTACK
-            if game == true && opponent2.life_points > 0
-                attacks(opponent2,player)
-            end
-        
+            attacks(opponent2,player) if game == true && opponent2.life_points > 0
+
+            #OPPONENT UPDATE
+            update_opponent_weapon(opponent1,opponent2)
+
             # STATUT PLAYERS
             players_statut(player,opponent1,opponent2)
         end
     end
     gameover(player,opponent1,opponent2)
+end
+
+def update_opponent_weapon(opponent1,opponent2)
+    if opponent1.life_points < 61 || opponent2.life_points < 61
+        opponent1.weapon_level = 2 
+        opponent2.weapon_level = 2
+    end
+    if opponent1.life_points < 31 || opponent2.life_points < 31
+        opponent1.weapon_level = 3 
+        opponent2.weapon_level = 3
+    end
 end
 
 def verify_party(player,opponent1,opponent2)
