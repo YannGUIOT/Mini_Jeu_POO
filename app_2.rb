@@ -27,15 +27,19 @@ def players_statut(player, opponent1, opponent2)
 end
 
 def your_choice(opponent1,opponent2)
-    print "\n\n CHOOSE YOUR ACTION :\n\n 1) SEARCH BEST WEAPON\n 2) SEARCH HEALTH PACK\n 3) ATTACK #{opponent1.name}\n 4) ATTACK #{opponent1.name}\n\n \e[3mif you enter other... you dead ! ...\e[23m  : "
+    print "\n\n CHOOSE YOUR ACTION :\n\n   1) SEARCH BEST WEAPON\n   2) SEARCH HEALTH PACK\n"
+    print "   3) ATTACK #{opponent1.name}\n" if opponent1.life_points > 0
+    print "   4) ATTACK #{opponent2.name}\n\n" if opponent2.life_points > 0
+    print "\n" if opponent2.life_points == 0
+    print " \e[3mif you enter other... you dead ! ...\e[23m  : "
     choice = gets.to_i
     return choice
 end
 
 def fight(player,opponent1,opponent2)
     game = true
-    opponent1_life = true
-    opponent2_life = true
+    opponent1_is_in_life = true
+    opponent2_is_in_life = true
     while game == true
 
         if game == true
@@ -51,25 +55,25 @@ def fight(player,opponent1,opponent2)
             elsif choice == 2
                 player.search_health_pack
             elsif choice == 3
-                if opponent1_life == true
-                    attacks(player,opponent1)
-                end
+                attacks(player,opponent1) if opponent1_is_in_life == true
+                cant_attack(opponent1) if opponent1_is_in_life == false
             elsif choice == 4
-                if opponent2_life == true
-                    attacks(player,opponent2)
-                end
+                attacks(player,opponent2) if opponent2_is_in_life == true
+                cant_attack(opponent2) if opponent2_is_in_life == false
             else
                 player.life_points = 0
                 game = false
                 break
             end
+
             # OPPONENTS LIFE VERIFICATION
             if opponent1.life_points == 0
-                opponent1_life == false
+                opponent1_is_in_life = false
             end
             if opponent2.life_points == 0
-                opponent2_life == false
+                opponent2_is_in_life = false
             end
+
 
             # GAME PARTY VERIFICATION
             game = verify_party(player,opponent1,opponent2)
@@ -128,6 +132,10 @@ def attacks(giver,receiver)
     receiver.gets_damage(y)
     print "et lui inflige \e[32m#{y}\e[0m point(s) de dommages !!\n"
     sleep 0.5
+end
+
+def cant_attack(opponent)
+    print "\n YOU CAN'T ATTACK \e[36m#{opponent.name}\e[0m ! \e[31mHE'S DEAD\e[0m !!!\n\n"
 end
 
 def random_type_attack

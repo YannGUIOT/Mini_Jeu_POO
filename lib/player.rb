@@ -17,7 +17,11 @@ class Player
         x = @name.length
         x = 13-x 
         print " "*x
-        print "    Life Points >  \e[32m\e[1m#{@life_points}\e[22m\e[0m"
+        if @life_points > 0
+            print "    Life Points >  \e[32m\e[1m#{@life_points}\e[22m\e[0m"
+        else
+            print "    Life Points >  \e[31m\e[1m#{@life_points}\e[22m\e[0m"
+        end
         str = @life_points.to_s
         x = str.length
         x = 5-x
@@ -27,9 +31,8 @@ class Player
 end
 
 class HumanPlayer < Player
-    attr_accessor :weapon_level #:opponent_array
+    attr_accessor :weapon_level, :is_in_life
     @weapon_level = 0
-    # @@opponent_array = []
 
     def initialize(name)
         @weapon_level = 1
@@ -42,20 +45,27 @@ class HumanPlayer < Player
         x = @name.length
         x = 16-x 
         print " "*x
-        print "   LP >  \e[32m\e[1m#{@life_points}\e[22m\e[0m"
+
+        if @life_points > 0
+            print "   LP >  \e[32m\e[1m#{@life_points}\e[22m\e[0m"
+        else
+            print "   LP >  \e[31m\e[1m#{@life_points}\e[22m\e[0m"
+        end
         str = @life_points.to_s
         x = str.length
         x = 5-x
         print " "*x
-        print " WL >  \e[32m\e[1m#{@weapon_level}\e[22m\e[0m  "
+        if @weapon_level > 1
+            print " WL >  \e[33m\e[1m#{@weapon_level}\e[22m\e[0m  "
+        else
+            print " WL >  \e[32m\e[1m#{@weapon_level}\e[22m\e[0m  "
+        end
         print "\e[42m \e[0m\n"
     end
 
     def gets_damage(damage)
         @life_points -= (damage)
-        if @life_points < 0
-            @life_points = 0
-        end
+        @life_points = 0 if @life_points < 0
     end
 
     def search_weapon
